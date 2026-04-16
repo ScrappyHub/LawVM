@@ -1,0 +1,27 @@
+{
+  "schema": "lawvm.policy_bundle.v1",
+  "bundle_id": "lawvm-policy-bundle-minimal-v1",
+  "rules": [
+    {
+      "rule_id": "001-allow-read-public",
+      "effect": "allow",
+      "principal": "alice",
+      "action": "read",
+      "namespace": "lawvm/public"
+    },
+    {
+      "rule_id": "002-deny-read-secret",
+      "effect": "deny",
+      "principal": "*",
+      "action": "read",
+      "namespace": "lawvm/secret"
+    },
+    {
+      "rule_id": "003-allow-write-dev",
+      "effect": "allow",
+      "principal": "builder",
+      "action": "write",
+      "namespace": "lawvm/dev"
+    }
+  ]
+}

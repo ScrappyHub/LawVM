@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"LawVM request v1",
+  "type":"object",
+  "required":["schema","principal","action","namespace","attrs"],
+  "properties":{
+    "schema":{"const":"lawvm.request.v1"},
+    "principal":{"type":"string"},
+    "action":{"type":"string"},
+    "namespace":{"type":"string"},
+    "attrs":{"type":"object","additionalProperties":true}
+  },
+  "additionalProperties":false
+}

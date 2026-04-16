@@ -1,0 +1,1 @@
+{"schema":"lawvm.policy_bundle.v1","rules":[{"rule_id":"d1","effect":"deny","principal":"user.alec","action":"read","namespace":"docs"}]}

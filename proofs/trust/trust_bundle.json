@@ -1,0 +1,15 @@
+{
+  "schema":"trust_bundle.v1",
+  "principals":[
+    {
+      "principal":"single-tenant/acme/authority/policy-admin",
+      "key_id":"policy-admin-dev-key",
+      "public_key_openssh":"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFAKEKEYREPLACE_ME policy-admin-dev"
+    },
+    {
+      "principal":"single-tenant/acme/authority/watchtower",
+      "key_id":"watchtower-dev-key",
+      "public_key_openssh":"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFAKEKEYREPLACE_ME watchtower-dev"
+    }
+  ]
+}

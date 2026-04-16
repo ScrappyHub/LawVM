@@ -1,0 +1,7 @@
+{
+  "schema": "lawvm.request.v1",
+  "principal": "alice",
+  "action": "read",
+  "namespace": "lawvm/secret",
+  "attrs": {}
+}
