@@ -1,0 +1,7 @@
+{
+  "schema": "lawvm.request.v1",
+  "principal": "nobody",
+  "action": "delete",
+  "namespace": "lawvm/unknown",
+  "attrs": {}
+}

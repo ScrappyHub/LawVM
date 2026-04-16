@@ -1,0 +1,23 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Trust bundle v1",
+  "type":"object",
+  "required":["schema","principals"],
+  "properties":{
+    "schema":{"const":"trust_bundle.v1"},
+    "principals":{
+      "type":"array",
+      "items":{
+        "type":"object",
+        "required":["principal","key_id","public_key_openssh"],
+        "properties":{
+          "principal":{"type":"string"},
+          "key_id":{"type":"string"},
+          "public_key_openssh":{"type":"string"}
+        },
+        "additionalProperties":false
+      }
+    }
+  },
+  "additionalProperties":false
+}

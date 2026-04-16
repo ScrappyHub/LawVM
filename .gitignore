@@ -1,0 +1,7 @@
+# LAWVM .gitignore
+proofs/_tmp/
+*.user
+*.suo
+*.tmp
+Thumbs.db
+.DS_Store

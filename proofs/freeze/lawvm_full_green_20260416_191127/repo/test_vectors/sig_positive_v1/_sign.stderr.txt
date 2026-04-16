@@ -1,0 +1,2 @@
+Signing file C:\dev\lawvm\test_vectors\sig_positive_v1\policy.json
+Write signature to C:\dev\lawvm\test_vectors\sig_positive_v1\policy.json.sig
