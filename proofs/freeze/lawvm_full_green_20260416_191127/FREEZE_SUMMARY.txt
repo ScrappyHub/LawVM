@@ -1,0 +1,9 @@
+LAWVM FREEZE SUMMARY
+
+freeze_dir=C:\dev\lawvm\proofs\freeze\lawvm_full_green_20260416_191127
+runner=C:\dev\lawvm\scripts\_scratch\_RUN_lawvm_full_green_v1.ps1
+stdout=
+stderr=
+sha256sums=C:\dev\lawvm\proofs\freeze\lawvm_full_green_20260416_191127\sha256sums.txt
+
+status=LAWVM_FULL_GREEN_V1_OK
