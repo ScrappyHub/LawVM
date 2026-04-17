@@ -5,3 +5,8 @@ proofs/_tmp/
 *.tmp
 Thumbs.db
 .DS_Store
+
+secrets/
+*.key
+*ed25519
+*.pem
