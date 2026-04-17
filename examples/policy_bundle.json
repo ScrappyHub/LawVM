@@ -1,0 +1,15 @@
+{
+  "schema": "lawvm.policy_bundle.v1",
+  "rules": [
+    {
+      "rule_id": "allow_read",
+      "effect": "allow",
+      "action": "read"
+    },
+    {
+      "rule_id": "deny_delete",
+      "effect": "deny",
+      "action": "delete"
+    }
+  ]
+}
