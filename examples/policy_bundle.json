@@ -1,15 +1,7 @@
 {
   "schema": "lawvm.policy_bundle.v1",
   "rules": [
-    {
-      "rule_id": "allow_read",
-      "effect": "allow",
-      "action": "read"
-    },
-    {
-      "rule_id": "deny_delete",
-      "effect": "deny",
-      "action": "delete"
-    }
+    { "rule_id": "allow_read", "effect": "allow", "principal": "user.alec", "action": "read" },
+    { "rule_id": "deny_delete", "effect": "deny", "principal": "user.alec", "action": "delete" }
   ]
 }

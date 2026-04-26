@@ -1,104 +1,63 @@
-\# LAWVM
+# LawVM
 
+LawVM is a local deterministic policy decision CLI.
 
+It lets a user define a JSON policy bundle, submit a JSON request, and receive a deterministic allow/deny decision with a stable reason code.
 
-LAWVM is a standalone deterministic machine-law execution layer.
+## What users use it for
 
+- local policy checks before automation runs
+- governed repo/tool actions
+- offline allow/deny decisions
+- signed-policy verification experiments
+- deterministic evidence-backed selftests
 
+## Quickstart
 
-It is built for people who need policy decisions to be local-first, reproducible, inspectable, and verifiable.
+```powershell
+.\lawvm.ps1 selftest
+.\lawvm.ps1 eval .\examples\request_allow.json
+.\lawvm.ps1 init-project .\my-lawvm-project
+.\lawvm.ps1 eval .\my-lawvm-project\request.json -Policy .\my-lawvm-project\policy_bundle.json
+```
 
+## Policy example
 
+```json
+{
+  "schema": "lawvm.policy_bundle.v1",
+  "rules": [
+    { "rule_id": "allow_read", "effect": "allow", "principal": "user.alec", "action": "read" },
+    { "rule_id": "deny_delete", "effect": "deny", "principal": "user.alec", "action": "delete" }
+  ]
+}
+```
 
-\## What LAWVM does
+## Request example
 
+```json
+{
+  "principal": "user.alec",
+  "action": "read"
+}
+```
 
+## Output example
 
-LAWVM lets you:
+```json
+{"decision":"ALLOW","reason_code":"RULE_ALLOW"}
+```
 
+## Tier-0 proof
 
+Run:
 
-\- load a policy bundle from disk
+```powershell
+powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File .\scripts\_scratch\_RUN_lawvm_tier0_v1.ps1 -RepoRoot .
+```
 
-\- verify whether that bundle is signed by an expected signer
+Expected final token:
 
-\- evaluate a request against deterministic policy rules
-
-\- return a stable decision result such as ALLOW or DENY
-
-\- run reproducible selftests to confirm the engine is working correctly
-
-
-
-\## What problem it solves
-
-
-
-Most policy logic is buried inside applications, services, or ad hoc scripts. That creates drift, weak auditability, and unclear trust boundaries.
-
-
-
-LAWVM separates policy evaluation into a standalone deterministic CLI workflow so decisions can be tested, verified, and trusted independently.
-
-
-
-\## Who it is for
-
-
-
-LAWVM is for:
-
-
-
-\- developers building governed software
-
-\- security and policy researchers
-
-\- operators who need explicit local policy decisions
-
-\- system designers building deterministic infrastructure
-
-\- teams that want policy bundles and request inputs to remain local on disk
-
-
-
-\## How users provide their own policies and requests
-
-
-
-LAWVM is currently a standalone local CLI tool.
-
-
-
-Users do not upload policy to a hosted service. Instead, they:
-
-
-
-1\. create a policy bundle JSON file
-
-2\. create one or more request JSON files
-
-3\. optionally sign the policy bundle
-
-4\. run LAWVM against those files locally
-
-
-
-Example project layout:
-
-
-
-```text
-
-my-lawvm-project/
-
-&#x20; policy\_bundle.json
-
-&#x20; request\_allow.json
-
-&#x20; request\_deny.json
-
-&#x20; policy\_bundle.sig
-
-&#x20; allowed\_signers
-
+```
+LAWVM_TIER0_FULL_GREEN_OK
+```
