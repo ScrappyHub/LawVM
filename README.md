@@ -1,63 +1,37 @@
 # LawVM
 
-LawVM is a local deterministic policy decision CLI.
+LawVM is a deterministic local policy decision CLI.
 
-It lets a user define a JSON policy bundle, submit a JSON request, and receive a deterministic allow/deny decision with a stable reason code.
-
-## What users use it for
-
-- local policy checks before automation runs
-- governed repo/tool actions
-- offline allow/deny decisions
-- signed-policy verification experiments
-- deterministic evidence-backed selftests
+It lets you define a JSON policy bundle, submit a JSON request, and receive a reproducible allow/deny decision with a stable reason code.
 
 ## Quickstart
 
 ```powershell
-.\lawvm.ps1 selftest
-.\lawvm.ps1 eval .\examples\request_allow.json
-.\lawvm.ps1 init-project .\my-lawvm-project
-.\lawvm.ps1 eval .\my-lawvm-project\request.json -Policy .\my-lawvm-project\policy_bundle.json
+git clone https://github.com/ScrappyHub/LawVM.git
+cd LawVM
+.\lawvm.ps1 verify-release
+.\lawvm.ps1 init-project .\my-policy-project
+.\lawvm.ps1 eval .\my-policy-project
 ```
 
-## Policy example
-
-```json
-{
-  "schema": "lawvm.policy_bundle.v1",
-  "rules": [
-    { "rule_id": "allow_read", "effect": "allow", "principal": "user.alec", "action": "read" },
-    { "rule_id": "deny_delete", "effect": "deny", "principal": "user.alec", "action": "delete" }
-  ]
-}
-```
-
-## Request example
-
-```json
-{
-  "principal": "user.alec",
-  "action": "read"
-}
-```
-
-## Output example
+## Example output
 
 ```json
 {"decision":"ALLOW","reason_code":"RULE_ALLOW"}
 ```
 
-## Tier-0 proof
+## What it is for
 
-Run:
+LawVM is for local policy checks before scripts, tools, automations, or AI-assisted actions continue.
 
-```powershell
-powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File .\scripts\_scratch\_RUN_lawvm_tier0_v1.ps1 -RepoRoot .
-```
+It answers:
 
-Expected final token:
+> Given this policy and this request, should this action be allowed?
 
-```
-LAWVM_TIER0_FULL_GREEN_OK
-```
+## Docs
+
+- `docs/CLI.md`
+- `docs/USAGE.md`
+- `docs/WHO_IS_THIS_FOR.md`
+- `docs/THREAT_MODEL.md`
+- `docs/RELEASE_CHECKLIST.md`
