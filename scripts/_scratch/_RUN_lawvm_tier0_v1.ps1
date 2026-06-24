@@ -41,5 +41,12 @@ if($LASTEXITCODE -ne 2){ Die "ACTION_GATE_DENY_SMOKE_FAIL" }
 & $PSExe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "lawvm.ps1") -Command check -Principal "user.example" -Action "read" -Policy (Join-Path $RepoRoot "examples\policies\protect-secrets.json") | Out-Host
 if($LASTEXITCODE -ne 0){ Die "ACTION_GATE_ALLOW_SMOKE_FAIL" }
 
+$DecisionReceiptPath = Join-Path $RepoRoot "proofs\receipts\lawvm.decisions.ndjson"
+if(-not (Test-Path -LiteralPath $DecisionReceiptPath -PathType Leaf)){ Die "MISSING_DECISION_RECEIPTS" }
+$ReceiptTail = (Get-Content -LiteralPath $DecisionReceiptPath -Tail 20) -join "`n"
+if($ReceiptTail -notmatch "lawvm.decision.receipt.v1"){ Die "DECISION_RECEIPT_SCHEMA_MISSING" }
+if($ReceiptTail -notmatch "RULE_ALLOW"){ Die "DECISION_RECEIPT_ALLOW_MISSING" }
+
+Write-Host "LAWVM_DECISION_RECEIPT_SMOKE_OK" -ForegroundColor Green
 Write-Host "LAWVM_ACTION_GATE_SMOKE_OK" -ForegroundColor Green
 Write-Host "LAWVM_RELEASE_VERIFY_OK" -ForegroundColor Green
