@@ -1,7 +1,7 @@
 param([Parameter(Mandatory=$true)][string]$RepoRoot)
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
-function Die([string]$m){ throw ("LAWVM_TIER0_FAIL:" + $m) }
+function Die([string]$m){ throw ("LAWVM_RELEASE_VERIFY_FAIL:" + $m) }
 function Parse-GateFile([string]$Path){
   if(-not (Test-Path -LiteralPath $Path -PathType Leaf)){ Die ("MISSING:" + $Path) }
   $tok=$null;$err=$null
@@ -21,7 +21,7 @@ $scripts = @(
   (Join-Path $RepoRoot "scripts\_selftest_lawvm_sig_positive_v1.ps1")
 )
 foreach($s in $scripts){ Parse-GateFile $s; Write-Host ("PARSE_OK: " + $s) -ForegroundColor Green }
-Write-Host "LAWVM_TIER0_START" -ForegroundColor Cyan
+Write-Host "LAWVM_RELEASE_VERIFY_START" -ForegroundColor Cyan
 $run = @(
   (Join-Path $RepoRoot "scripts\_selftest_lawvm_v1.ps1"),
   (Join-Path $RepoRoot "scripts\_selftest_lawvm_vectors_v1.ps1"),
@@ -35,4 +35,11 @@ foreach($r in $run){
 }
 & $PSExe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "lawvm.ps1") -Command eval -Target (Join-Path $RepoRoot "examples\request_allow.json") | Out-Host
 if($LASTEXITCODE -ne 0){ Die "CLI_EVAL_FAIL" }
-Write-Host "LAWVM_TIER0_FULL_GREEN_OK" -ForegroundColor Green
+& $PSExe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "lawvm.ps1") -Command check -Principal "agent.local" -Action "write" -Namespace "repo.secrets" -Policy (Join-Path $RepoRoot "examples\policies\protect-secrets.json") | Out-Host
+if($LASTEXITCODE -ne 2){ Die "ACTION_GATE_DENY_SMOKE_FAIL" }
+
+& $PSExe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File (Join-Path $RepoRoot "lawvm.ps1") -Command check -Principal "user.example" -Action "read" -Policy (Join-Path $RepoRoot "examples\policies\protect-secrets.json") | Out-Host
+if($LASTEXITCODE -ne 0){ Die "ACTION_GATE_ALLOW_SMOKE_FAIL" }
+
+Write-Host "LAWVM_ACTION_GATE_SMOKE_OK" -ForegroundColor Green
+Write-Host "LAWVM_RELEASE_VERIFY_OK" -ForegroundColor Green

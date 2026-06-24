@@ -1,0 +1,7 @@
+{
+  "schema": "lawvm.policy_bundle.v1",
+  "rules": [
+    { "rule_id": "deny_release_by_default", "effect": "deny", "action": "release", "namespace": "prod" },
+    { "rule_id": "allow_release_manager_dry_run", "effect": "allow", "principal": "user.release-manager", "action": "release-dry-run", "namespace": "prod" }
+  ]
+}
